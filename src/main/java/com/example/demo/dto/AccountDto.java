@@ -22,24 +22,3 @@ public class AccountDto {
         this.created = account.getCreated();
     }
 }
-
-
-
-
-/*
-@Getter
-@Setter
-public class StudentDto {
-
-    private UUID id;
-    private String name;
-    private String email;
-
-    public StudentDto(Student student) {
-        this.name = student.getName();
-        this.email = student.getEmail();
-        this.id = student.getId();
-    }
-
-}
-*/

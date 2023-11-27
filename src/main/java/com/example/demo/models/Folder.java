@@ -20,11 +20,11 @@ public class Folder {
     private String name;
 
     @Column(name = "account_id")
-    private UUID accountId;
+    private UUID ownerId;
     private Date created = new Date();
 
-    public Folder(String name, UUID accountId) {
+    public Folder(String name, UUID ownerId) {
         this.name = name;
-        this.accountId = accountId;
+        this.ownerId = ownerId;
     }
 }
