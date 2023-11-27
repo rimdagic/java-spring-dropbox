@@ -12,19 +12,19 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Account {
+public class Folder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    private String name;
 
-    @Column(unique = true)
-    private String username;
-    private String password;
+    @Column(name = "account_id")
+    private UUID accountId;
     private Date created = new Date();
 
-    public Account(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Folder(String name, UUID accountId) {
+        this.name = name;
+        this.accountId = accountId;
     }
 }

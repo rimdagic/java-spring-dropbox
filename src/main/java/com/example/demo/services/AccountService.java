@@ -15,8 +15,8 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public String createAccount(String username, String password) {
-        accountRepository.save(new Account(username, password));
-        return "success";
+    public Account createAccount(String username, String password) {
+        var result = accountRepository.save(new Account(username, password));
+        return result;
     }
 }
