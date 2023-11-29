@@ -19,7 +19,7 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseEntity<Account> register(@RequestBody CreateAccountDto createAccountDto){
-        var result = accountService.createAccount(createAccountDto.getUsername(), createAccountDto.getPassword());
+        var result = accountService.createAccount(createAccountDto);
         return ResponseEntity.ok(result);
     }
 }

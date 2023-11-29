@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.example.demo.dto.CreateAccountDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,8 @@ public class Account {
     private String password;
     private Date created = new Date();
 
-    public Account(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Account(CreateAccountDto createAccountDto) {
+        this.username = createAccountDto.getUsername();
+        this.password = createAccountDto.getPassword();
     }
 }

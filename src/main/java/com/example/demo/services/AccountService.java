@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dto.CreateAccountDto;
 import com.example.demo.models.Account;
 import com.example.demo.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,8 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account createAccount(String username, String password) {
-        var result = accountRepository.save(new Account(username, password));
+    public Account createAccount(CreateAccountDto createAccountDto) {
+        var result = accountRepository.save(new Account(createAccountDto));
         return result;
     }
 }
