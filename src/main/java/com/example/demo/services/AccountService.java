@@ -6,6 +6,8 @@ import com.example.demo.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AccountService {
 
@@ -19,5 +21,9 @@ public class AccountService {
     public Account createAccount(CreateAccountDto createAccountDto) {
         var result = accountRepository.save(new Account(createAccountDto));
         return result;
+    }
+
+    public List<Account> getAllAccounts(){
+        return accountRepository.findAll();
     }
 }

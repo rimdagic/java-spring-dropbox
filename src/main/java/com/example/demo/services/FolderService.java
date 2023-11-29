@@ -27,4 +27,9 @@ public class FolderService {
     public Optional<Folder> getFolder(String name){
         return folderRepository.findByName(name);
     }
+
+    public List<Folder> getAllFoldersByUser(){
+        List result = folderRepository.findAll();
+        return result;
+    }
 }

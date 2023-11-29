@@ -5,9 +5,9 @@ import com.example.demo.models.Folder;
 import com.example.demo.services.FolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,9 +33,13 @@ public class FolderController {
 
     @PostMapping("/new")
     public Folder createFolder(@RequestBody CreateFolderDto createFolderDto){
-
         var result = folderService.createFolder(createFolderDto);
-
         return result;
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Folder>> getAll(){
+        var result = folderService.getAllFoldersByUser();
+        return ResponseEntity.ok(result);
     }
 }
