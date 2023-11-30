@@ -3,22 +3,21 @@ package com.example.demo.services;
 import com.example.demo.dto.CreateAccountDto;
 import com.example.demo.models.Account;
 import com.example.demo.repositories.AccountRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
-@Service
-public class AccountService {
+public class UserService implements UserDetailsService {
 
     AccountRepository accountRepository;
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public void account(AccountRepository accountRepository, PasswordEncoder passwordEncoder){
+    public UserService (AccountRepository accountRepository, PasswordEncoder passwordEncoder){
         this.accountRepository = accountRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -35,5 +34,13 @@ public class AccountService {
 
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        var result = accountRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Could not find user '" + username + "'."));
+
+        return (UserDetails) result;
     }
 }

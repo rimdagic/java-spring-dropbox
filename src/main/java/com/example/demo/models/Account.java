@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.UUID;
 
@@ -23,6 +24,14 @@ public class Account {
     private String username;
     private String password;
     private Date created = new Date();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_authorities",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id")
+    )
+    private Collection<Authorities> authorities;
 
     public Account(CreateAccountDto createAccountDto) {
         this.username = createAccountDto.getUsername();
