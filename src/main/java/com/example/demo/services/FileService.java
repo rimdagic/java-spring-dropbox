@@ -50,4 +50,10 @@ public class FileService {
         return usersFolders.stream()
                 .anyMatch(folder -> folder.getName().equals(folderName));
     }
+
+    public File loadFileAsBytes(String fileName){
+        File file = fileRepository.findByName(fileName);
+        System.out.println(file);
+        return file;
+    }
 }

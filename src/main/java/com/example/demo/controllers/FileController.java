@@ -1,18 +1,19 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.CreateFileDto;
 import com.example.demo.models.File;
 import com.example.demo.services.FileService;
 import com.example.demo.services.UserService;
+import jakarta.activation.FileTypeMap;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.UUID;
 
 @RestController
-@RequestMapping("/{folder}")
+@RequestMapping("/file")
 public class FileController {
 
     FileService fileService;
@@ -24,9 +25,24 @@ public class FileController {
     }
 
     @GetMapping("/{file}")
-    public String getFile(@PathVariable String folder, @PathVariable("file") String fileName) {
+    public ResponseEntity<byte[]> getFile(@PathVariable("file") String fileName) {
+        File fileBytes = fileService.loadFileAsBytes(fileName);
 
-        return "File: " + fileName + " in folder: " + folder;
+        String contentType = FileTypeMap.getDefaultFileTypeMap().getContentType(fileName);
+
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        byte[] resource = fileBytes.getData();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentType(MediaType.parseMediaType(contentType));
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
     }
 
     @PostMapping("/{folderName}")
