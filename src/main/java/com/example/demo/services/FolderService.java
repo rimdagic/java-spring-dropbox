@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateFolderDto;
+import com.example.demo.exceptions.FolderAlreadyExistsException;
 import com.example.demo.exceptions.MissingAccountException;
 import com.example.demo.models.Account;
 import com.example.demo.models.Folder;
@@ -24,13 +25,20 @@ public class FolderService {
     }
 
     public Folder createFolder(CreateFolderDto createFolderDto, String username){
-        var accountOptional = accountRepository.findByUsername(username);
+        var account = accountRepository.findByUsername(username).get();
         var folderOptional = folderRepository.findByName(createFolderDto.getName());
+        boolean isTaken = folderNameTaken(createFolderDto.getName(), username);
 
-        if(accountOptional.isPresent()) {
-            Account account = accountOptional.get();
+        if(!isTaken) {
             return folderRepository.save(new Folder(createFolderDto.getName(), account.getId()));
-        } else return null;
+        } else throw new FolderAlreadyExistsException("User " + username + " already has a folder named " + createFolderDto.getName());
+    }
+
+    public boolean folderNameTaken(String newFolderName, String username){
+
+        List<Folder> usersFolders = getAllFoldersByUser(username);
+        return usersFolders.stream()
+                .anyMatch(folder -> folder.getName().equals(newFolderName));
     }
 
     public Optional<Folder> getFolder(String name){

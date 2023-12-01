@@ -36,7 +36,6 @@ public class FolderController {
     public Folder createFolder(@RequestBody CreateFolderDto createFolderDto,
                                @RequestHeader("Authorization") String authorizationHeader){
 
-        System.out.println(authorizationHeader);
         String username = userService.getUsernameFromToken(authorizationHeader);
 
         var result = folderService.createFolder(createFolderDto, username);
