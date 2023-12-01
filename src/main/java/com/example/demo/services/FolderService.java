@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateFolderDto;
+import com.example.demo.exceptions.MissingAccountException;
 import com.example.demo.models.Account;
 import com.example.demo.models.Folder;
 import com.example.demo.repositories.AccountRepository;
@@ -40,9 +41,11 @@ public class FolderService {
     public List<Folder> getAllFoldersByUser(String username){
         Account account;
         Optional<Account> accountOptional = accountRepository.findByUsername(username);
+        boolean isAccountExisting = accountOptional.isPresent();
 
-        return folderRepository.findAll();
+        if(isAccountExisting){
+            account = accountOptional.get();
+            return folderRepository.findByOwnerId(account.getId());
+        } else throw new MissingAccountException("Could not find account based on JWT Token");
     }
-
-
 }
