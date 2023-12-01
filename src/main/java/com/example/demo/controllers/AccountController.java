@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/account")
@@ -43,21 +44,25 @@ public class AccountController {
 
     @PostMapping("/login")
     public String login(@RequestHeader String username, @RequestHeader String password) {
-        var auth = new UsernamePasswordAuthenticationToken(username, passwordEncoder.encode(password));
-        var result = authenticationProvider.authenticate(auth);
+        try {
+            var auth = new UsernamePasswordAuthenticationToken(username, password);
+            var result = authenticationProvider.authenticate(auth);
 
-        System.out.println("HÄÄÄR------------------------------------------------------------------");
+            if (result.isAuthenticated()) {
+                var algorithm = Algorithm.HMAC256("keyboardcat");
+                var token = JWT.create()
+                        .withSubject(username)
+                        .withIssuer("auth0")
+                        .sign(algorithm);
 
-        if (result.isAuthenticated()) {
-            var algoritm = Algorithm.HMAC256("keyboardcatEV)+7yeVE)AV/Y345E)yvEA)7)(/&%vduHY7GEDW(/W¤Q#46578!)PWQ(FUIHdsU345v");
-            var token = JWT.create()
-                    .withSubject(username)
-                    .withIssuer("auth0")
-                    .sign(algoritm);
-
-            return token;
+                System.out.println(username + " logged in at " + new Date());
+                return token;
+            } else {
+                System.out.println("Authentication failed.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return "Failed to login.";
+        return "Failed to authenticate";
     }
 }

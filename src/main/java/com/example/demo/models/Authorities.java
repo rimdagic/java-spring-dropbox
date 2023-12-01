@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Entity
 public class Authorities implements GrantedAuthority {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String authorityName;
 

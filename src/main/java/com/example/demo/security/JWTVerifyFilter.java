@@ -32,13 +32,12 @@ public class JWTVerifyFilter extends OncePerRequestFilter {
         }
 
         try {
-            var algorithm = Algorithm.HMAC256("keyboardcatEV)+7yeVE)AV/Y345E)yvEA)7)(/&%vduHY7GEDW(/W¤Q#46578!)PWQ(FUIHdsU345v");
+            var algorithm = Algorithm.HMAC256("keyboardcat");
             var verifier = JWT.require(algorithm)
                     .withIssuer("auth0")
                     .build();
 
             var jwt = verifier.verify(authHeader);
-
             var account = this.userService.loadUserByUsername(jwt.getSubject());
 
             var auth = new UsernamePasswordAuthenticationToken(account, account.getPassword(), account.getAuthorities());

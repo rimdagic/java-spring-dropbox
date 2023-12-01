@@ -25,9 +25,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .addFilterAfter(new JWTVerifyFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/account/login").permitAll()
-                        .requestMatchers("/account/register").permitAll()
-                        .anyRequest().authenticated());
+                        .requestMatchers("/folder/new").authenticated()
+                        .anyRequest().permitAll());
+                    //    .requestMatchers("/account/login").permitAll()
+                    //    .requestMatchers("/account/register").permitAll());
+                    //    .anyRequest().authenticated());
 
         return security.build();
     }
