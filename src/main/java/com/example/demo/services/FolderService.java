@@ -8,7 +8,6 @@ import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +45,6 @@ public class FolderService {
         if(isAccountExisting){
             account = accountOptional.get();
             return folderRepository.findByOwnerId(account.getId());
-        } else throw new MissingAccountException("Could not find account based on JWT Token");
+        } else throw new MissingAccountException("Could not find account based on provided authorization JWT");
     }
 }

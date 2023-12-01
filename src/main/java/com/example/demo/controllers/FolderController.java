@@ -45,7 +45,7 @@ public class FolderController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Folder>> getAll(@RequestHeader("Authorization") String authorizationHeader){
-        String username = userService.getUsernameFromToken(authorizationHeader);
+        var username = userService.getUsernameFromToken(authorizationHeader);
         var result = folderService.getAllFoldersByUser(username);
         return ResponseEntity.ok(result);
     }
