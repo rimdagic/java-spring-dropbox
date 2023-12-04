@@ -2,7 +2,6 @@ package com.example.demo.services;
 
 import com.example.demo.dto.CreateFileDto;
 import com.example.demo.exceptions.MissingFolderException;
-import com.example.demo.models.Account;
 import com.example.demo.models.File;
 import com.example.demo.models.Folder;
 import com.example.demo.repositories.AccountRepository;
@@ -74,32 +73,5 @@ public class FileService {
 
     }
 
-
-
-
-
-    /*
-    public Folder folderContainsFile(String username, UUID folderId, UUID fileId){
-        List<Folder> usersFolders = folderService.getAllFoldersByUser(username);
-        Folder chosenFolder = usersFolders.stream()
-                .filter(folder -> folder.getId().equals(folderId))
-                .findFirst()
-                .orElse(null);
-
-        List<File> filesInFolder = fileRepository.findFilesByFolderId(folderId);
-        File ChosenFile = filesInFolder.stream()
-                .filter(file -> file.getId.equals(fileId))
-        return chosenFolder;
-*/
-/*
-    public File deleteFile(String username, String folderName, String filename){
-        if (userHasFolder(username, folderName)){
-         //   folderContainsFile(username, folderName, filename);
-        }
-
-        }
-*/
-        //user has folder UUID
-        //folder has file UUID
-    }
+}
 
