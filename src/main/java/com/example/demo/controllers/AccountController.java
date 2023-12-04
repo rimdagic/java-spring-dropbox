@@ -39,7 +39,7 @@ public class AccountController {
             var result = accountService.createAccount(createAccountDto);
             return ResponseEntity.ok(result);
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(
+            return ResponseEntity.status(409).body(
                     new ResponseMessageDto(
                             e.getMessage(),
                             LocalDateTime.now()));

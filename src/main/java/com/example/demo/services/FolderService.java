@@ -4,6 +4,7 @@ import com.example.demo.dto.CreateFolderDto;
 import com.example.demo.dto.FolderContentDto;
 import com.example.demo.exceptions.FolderAlreadyExistsException;
 import com.example.demo.exceptions.MissingAccountException;
+import com.example.demo.exceptions.MissingFolderException;
 import com.example.demo.models.Account;
 import com.example.demo.models.File;
 import com.example.demo.models.Folder;
@@ -46,11 +47,18 @@ public class FolderService {
                 .anyMatch(folder -> folder.getName().equals(newFolderName));
     }
 
-    public FolderContentDto getFolder(String folderName, String username){
-        Folder specificFolder = getUsersFolder(username, folderName);
-        List<File> fileList = fileRepository.findFilesByFolderId(specificFolder.getId());
-        FolderContentDto folderContentDto = new FolderContentDto(specificFolder.getName(), fileList);
-        return folderContentDto;
+    public FolderContentDto getFolderContent(String folderName, String username){
+            Optional<Folder> specificFolderOptional = getUsersFolder(username, folderName);
+
+            if(specificFolderOptional.isPresent()) {
+                Folder specificFolder = specificFolderOptional.get();
+
+                List<File> fileList = fileRepository.findFilesByFolderId(specificFolder.getId());
+                FolderContentDto folderContentDto = new FolderContentDto(specificFolder.getName(), fileList);
+                return folderContentDto;
+
+            } else throw new MissingFolderException("User does not have that folder");
+
     }
 
     public List<Folder> getAllFoldersByUser(String username){
@@ -73,15 +81,15 @@ public class FolderService {
     }
 
 
-    public Folder getUsersFolder(String username, String folderName){
+    public Optional<Folder> getUsersFolder(String username, String folderName){
         Optional<Account> accountOptional = accountRepository.findByUsername(username);
         if(accountOptional.isPresent()) {
             List<Folder> usersFolders = folderRepository.findByOwnerId(accountOptional.get().getId());
 
-            Folder chosenFolder = usersFolders.stream()
+            Optional<Folder> chosenFolder = usersFolders.stream()
                     .filter(folder -> folder.getName().equals(folderName))
-                    .findAny()
-                    .orElse(null);
+                    .findAny();
+
             return chosenFolder;
         }
         else throw new MissingAccountException("No such user");

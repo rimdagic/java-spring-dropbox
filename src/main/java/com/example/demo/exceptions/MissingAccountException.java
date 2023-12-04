@@ -3,7 +3,7 @@ package com.example.demo.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class MissingAccountException extends RuntimeException{
         public MissingAccountException(String message) {
             super(message);
