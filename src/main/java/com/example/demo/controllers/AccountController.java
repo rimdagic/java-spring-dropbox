@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.demo.dto.CreateAccountDto;
+import com.example.demo.dto.ResponseMessageDto;
 import com.example.demo.models.Account;
 import com.example.demo.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -31,9 +33,17 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Account> register(@RequestBody CreateAccountDto createAccountDto){
-        var result = accountService.createAccount(createAccountDto);
-        return ResponseEntity.ok(result);
+    public ResponseEntity<Object> register(@RequestBody CreateAccountDto createAccountDto){
+
+        try {
+            var result = accountService.createAccount(createAccountDto);
+            return ResponseEntity.ok(result);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(
+                    new ResponseMessageDto(
+                            e.getMessage(),
+                            LocalDateTime.now()));
+        }
     }
 
     @GetMapping("/all")

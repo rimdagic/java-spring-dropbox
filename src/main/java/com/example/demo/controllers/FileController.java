@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @RestController
@@ -52,6 +53,7 @@ public class FileController {
             @RequestHeader("Authorization") String authorizationHeader) throws IOException {
 
         var username = userService.getUsernameFromToken(authorizationHeader);
+
         var result = fileService.saveFile(multipartFile, folderName, username);
         return ResponseEntity.ok(result);
     }
@@ -62,11 +64,14 @@ public class FileController {
             @PathVariable String filename,
             @RequestHeader("Authorization") String authorizationHeader) throws IOException {
 
+                var username = userService.getUsernameFromToken(authorizationHeader);
 
-        var username = userService.getUsernameFromToken(authorizationHeader);
+                try {
+                    var deletedFile = fileService.deleteFile(username, folderName, filename);
+                    return ResponseEntity.ok(deletedFile);
 
-        var deletedFile = fileService.deleteFile(username, folderName, filename);
-
-        return ResponseEntity.ok(deletedFile);
-    }
+                } catch (FileNotFoundException e) {
+                    throw e;
+                }
+            }
 }

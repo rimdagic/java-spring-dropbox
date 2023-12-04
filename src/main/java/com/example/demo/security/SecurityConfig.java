@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/account/register").permitAll()
                         .requestMatchers("/account/login").permitAll()
+                        .requestMatchers("/account/all").hasAuthority("ADMIN")
                         .anyRequest().authenticated());
 
         return security.build();

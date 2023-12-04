@@ -8,6 +8,7 @@ import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.FileRepository;
 import com.example.demo.repositories.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,6 +54,10 @@ public class FileService {
         return file;
     }
 
+    public List<File> getFilesByFolderId(UUID folderId){
+        return fileRepository.findFilesByFolderId(folderId);
+    }
+
 
     public File deleteFile(String username, String folderName, String filename) throws FileNotFoundException {
         Folder folder = folderService.getUsersFolder(username, folderName);
@@ -70,8 +75,6 @@ public class FileService {
             return chosenFile;
         }
         else throw new FileNotFoundException("User does not have file with corresponding filename in folder");
-
     }
-
 }
 

@@ -1,11 +1,14 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateFolderDto;
+import com.example.demo.dto.FolderContentDto;
 import com.example.demo.exceptions.FolderAlreadyExistsException;
 import com.example.demo.exceptions.MissingAccountException;
 import com.example.demo.models.Account;
+import com.example.demo.models.File;
 import com.example.demo.models.Folder;
 import com.example.demo.repositories.AccountRepository;
+import com.example.demo.repositories.FileRepository;
 import com.example.demo.repositories.FolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +20,13 @@ public class FolderService {
 
     FolderRepository folderRepository;
     AccountRepository accountRepository;
+    FileRepository fileRepository;
 
     @Autowired
-    public FolderService(FolderRepository folderRepository, AccountRepository accountRepository){
+    public FolderService(FolderRepository folderRepository, AccountRepository accountRepository, FileRepository fileRepository){
         this.folderRepository = folderRepository;
         this.accountRepository = accountRepository;
+        this.fileRepository = fileRepository;
     }
 
     public Folder createFolder(CreateFolderDto createFolderDto, String username){
@@ -41,8 +46,11 @@ public class FolderService {
                 .anyMatch(folder -> folder.getName().equals(newFolderName));
     }
 
-    public Optional<Folder> getFolder(String name){
-        return folderRepository.findByName(name);
+    public FolderContentDto getFolder(String folderName, String username){
+        Folder specificFolder = getUsersFolder(username, folderName);
+        List<File> fileList = fileRepository.findFilesByFolderId(specificFolder.getId());
+        FolderContentDto folderContentDto = new FolderContentDto(specificFolder.getName(), fileList);
+        return folderContentDto;
     }
 
     public List<Folder> getAllFoldersByUser(String username){

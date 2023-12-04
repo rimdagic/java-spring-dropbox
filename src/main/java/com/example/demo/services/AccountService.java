@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateAccountDto;
+import com.example.demo.exceptions.RegistrationFailedException;
 import com.example.demo.models.Account;
 import com.example.demo.repositories.AccountRepository;
 import lombok.AllArgsConstructor;
@@ -29,8 +30,12 @@ public class AccountService {
         String encryptedPassword = passwordEncoder.encode(password);
         createAccountDto.setPassword(encryptedPassword);
 
-        var result = accountRepository.save(new Account(createAccountDto));
-        return result;
+        try {
+            var result = accountRepository.save(new Account(createAccountDto));
+            return result;
+        } catch (Exception e) {
+            throw new RegistrationFailedException(e.getMessage());
+        }
     }
 
     public List<Account> getAllAccounts(){
