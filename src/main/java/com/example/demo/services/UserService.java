@@ -5,8 +5,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.demo.dto.CreateAccountDto;
 import com.example.demo.models.Account;
 import com.example.demo.repositories.AccountRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

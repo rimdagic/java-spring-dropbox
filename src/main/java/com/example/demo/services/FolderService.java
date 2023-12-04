@@ -55,4 +55,27 @@ public class FolderService {
             return folderRepository.findByOwnerId(account.getId());
         } else throw new MissingAccountException("Could not find account based on provided authorization JWT");
     }
+
+    public boolean userHasFolder(String username, String folderName){
+        Optional<Account> accountOptional = accountRepository.findByUsername(username);
+        List<Folder> usersFolders = folderRepository.findByOwnerId(accountOptional.get().getId());
+
+        return usersFolders.stream()
+                .anyMatch(folder -> folder.getName().equals(folderName));
+    }
+
+
+    public Folder getUsersFolder(String username, String folderName){
+        Optional<Account> accountOptional = accountRepository.findByUsername(username);
+        if(accountOptional.isPresent()) {
+            List<Folder> usersFolders = folderRepository.findByOwnerId(accountOptional.get().getId());
+
+            Folder chosenFolder = usersFolders.stream()
+                    .filter(folder -> folder.getName().equals(folderName))
+                    .findAny()
+                    .orElse(null);
+            return chosenFolder;
+        }
+        else throw new MissingAccountException("No such user");
+    }
 }

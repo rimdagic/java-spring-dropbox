@@ -55,4 +55,18 @@ public class FileController {
         var result = fileService.saveFile(multipartFile, folderName, username);
         return ResponseEntity.ok(result);
     }
+
+    @DeleteMapping({"/{folderName}/{filename}"})
+    public ResponseEntity<File> deleteFile(
+            @PathVariable String folderName,
+            @PathVariable String filename,
+            @RequestHeader("Authorization") String authorizationHeader) throws IOException {
+
+
+        var username = userService.getUsernameFromToken(authorizationHeader);
+
+        var deletedFile = fileService.deleteFile(username, folderName, filename);
+
+        return ResponseEntity.ok(deletedFile);
+    }
 }
