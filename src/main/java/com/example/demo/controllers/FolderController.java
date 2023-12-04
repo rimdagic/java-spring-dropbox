@@ -32,11 +32,14 @@ public class FolderController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/new")
-    public Folder createFolder(@RequestBody CreateFolderDto createFolderDto,
+    @PostMapping("/{folderName}")
+    public Folder createFolder(@PathVariable String folderName,
                                @RequestHeader("Authorization") String authorizationHeader){
 
         String username = userService.getUsernameFromToken(authorizationHeader);
+
+        CreateFolderDto createFolderDto = new CreateFolderDto();
+        createFolderDto.setName(folderName);
 
         var result = folderService.createFolder(createFolderDto, username);
         return result;
