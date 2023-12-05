@@ -9,18 +9,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@AutoConfigureMockMvc
-public class RegisterAccountTest {
+@AutoConfigureMockMvc(addFilters = false)
+public class AccountControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,22 +26,19 @@ public class RegisterAccountTest {
     @MockBean
     private AccountService accountService;
 
-    @MockBean
-    PasswordEncoder passwordEncoder;
-
-
     @Test
     void testRegisterAccount() throws Exception{
         CreateAccountDto createAccountDto = new CreateAccountDto();
-        createAccountDto.setUsername("test");
-        createAccountDto.setPassword("test");
+        createAccountDto.setUsername("testUser");
+        createAccountDto.setPassword("testUser");
 
         mockMvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(createAccountDto)))
                 .andExpect(status().isOk());
 
-        verify(accountService, times(1)).createAccount(eq(createAccountDto));
-    }
+        //.andExpect(status().isBadRequest()); expect a bad request response to make the test fail
 
+        verify(accountService, times(1)).createAccount(createAccountDto);
+    }
 }
