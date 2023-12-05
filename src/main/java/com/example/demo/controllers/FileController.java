@@ -5,6 +5,7 @@ import com.example.demo.models.File;
 import com.example.demo.services.FileService;
 import com.example.demo.services.UserService;
 import jakarta.activation.FileTypeMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class FileController {
     FileService fileService;
     UserService userService;
 
+    @Autowired
     public FileController(FileService fileService, UserService userService){
         this.fileService = fileService;
         this.userService = userService;

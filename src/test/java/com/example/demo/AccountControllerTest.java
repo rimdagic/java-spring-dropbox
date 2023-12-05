@@ -36,9 +36,6 @@ public class AccountControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(createAccountDto)))
                 .andExpect(status().isOk());
-
-        //.andExpect(status().isBadRequest()); expect a bad request response to make the test fail
-
         verify(accountService, times(1)).createAccount(createAccountDto);
     }
 }
