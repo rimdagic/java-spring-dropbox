@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.demo.dto.CreateAccountDto;
+import com.example.demo.dto.LoginAccountDto;
 import com.example.demo.dto.ResponseMessageDto;
 import com.example.demo.models.Account;
 import com.example.demo.services.AccountService;
@@ -53,7 +54,10 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestHeader String username, @RequestHeader String password) {
+    public String login(@RequestBody LoginAccountDto loginAccountDto) {
+        var username = loginAccountDto.getUsername();
+        var password = loginAccountDto.getPassword();
+
         try {
             var auth = new UsernamePasswordAuthenticationToken(username, password);
             var result = authenticationProvider.authenticate(auth);

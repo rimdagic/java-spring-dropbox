@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .requestMatchers("/account/all").hasAuthority("ADMIN")
                         .requestMatchers("/account/{username}").hasAuthority("ADMIN")
 
-                        .anyRequest().permitAll());
+                        .anyRequest().authenticated());
 
         return security.build();
     }

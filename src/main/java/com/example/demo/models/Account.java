@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import com.example.demo.dto.CreateAccountDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,12 @@ public class Account {
 
     @Column(unique = true)
     private String username;
+
+    @JsonIgnore
     private String password;
     private Date created = new Date();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_authorities",
             joinColumns = @JoinColumn(name = "user_id"),
