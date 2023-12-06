@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -27,4 +28,24 @@ public class Folder {
         this.name = name;
         this.ownerId = ownerId;
     }
+
+
+
+/*
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Folder folder = (Folder) o;
+        return Objects.equals(id, folder.id) &&
+                Objects.equals(name, folder.name) &&
+                Objects.equals(ownerId, folder.ownerId) &&
+                Objects.equals(created, folder.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, ownerId, created);
+    }
+    */
 }

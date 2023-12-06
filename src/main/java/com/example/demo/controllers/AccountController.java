@@ -75,4 +75,11 @@ public class AccountController {
         }
         return "Failed to authenticate";
     }
+
+    @DeleteMapping("/{username}")
+    public ResponseEntity<Account> deleteAccount(@PathVariable String username){
+        Account account = accountService.deleteAccount(username);
+        return ResponseEntity.ok(account);
+    }
+
 }

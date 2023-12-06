@@ -25,7 +25,7 @@ public class Account {
     private String password;
     private Date created = new Date();
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "user_authorities",
             joinColumns = @JoinColumn(name = "user_id"),
