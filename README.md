@@ -1,4 +1,4 @@
-# DROPBOX
+# Java Spring File API
 
 ## Description
 This project was made during a course in Java Spring. 
@@ -75,8 +75,8 @@ users can also see a list of their folders or the content of a specific folder.
         VALUE: multipart/form-data
 
     Body:
-        Key: file
-        Value: The file you want to upload
+        KEY: file
+        VALUE: The file you want to upload
 
 #### - Download file
     Method: GET
