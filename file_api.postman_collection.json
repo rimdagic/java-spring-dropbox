@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "4e877563-ecb4-4042-88ad-5270fb12783b",
+		"name": "DROPBOX",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26344713"
+	},
+	"item": [
+		{
+			"name": "ADMIN ENDPOINTS",
+			"item": [
+				{
+					"name": "All accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/account/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/account/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OPEN ENDPOINTS",
+			"item": [
+				{
+					"name": "Register account",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/account/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "username",
+								"value": "admin",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "password",
+								"value": "admin",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/account/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUTHENTICATED ENDPOINTS",
+			"item": [
+				{
+					"name": "Create folder",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/folder/new_folder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"folder",
+								"new_folder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "File",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/aagic/OneDrive/Skrivbord/test.txt"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/file/new_folder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"file",
+								"new_folder"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "File",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/file/new_folder/test.txt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"file",
+								"new_folder",
+								"test.txt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Specific folders content",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/folder/new_folder",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"folder",
+								"new_folder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All my folders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/folder/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"folder",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete file",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImF1dGgwIn0.i6WN4c42P7TwuOgXGzauWBoa19mtpeMOqCeDxyfHAns",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/file/new_folder/test.txt",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"file",
+								"new_folder",
+								"test.txt"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
