@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateFileDto;
+import com.example.demo.exceptions.FileAlreadyExistsException;
 import com.example.demo.exceptions.FileSizeTooLargeException;
 import com.example.demo.exceptions.MissingFileException;
 import com.example.demo.exceptions.MissingFolderException;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

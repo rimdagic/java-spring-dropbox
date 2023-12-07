@@ -105,7 +105,6 @@ public class FileController {
             var result = fileService.saveFile(multipartFile, folderName, username);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
-            e.printStackTrace();
             return ResponseEntity.status(500).body(
                     new ResponseMessageDto(e.getMessage(), LocalDateTime.now()));
         }

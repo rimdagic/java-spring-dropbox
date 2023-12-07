@@ -37,6 +37,6 @@ public class File {
     public File(CreateFileDto createFileDto){
         this.name = createFileDto.getName();
         this.data = createFileDto.getData();
-        this.folder = createFileDto.getFolder();
+        this.folder = createFileDto.getFolderId();
     }
 }

@@ -8,7 +8,11 @@ import lombok.Setter;
 import java.util.Collection;
 import java.util.List;
 
-@NoArgsConstructor
+/**
+ * This `FolderContentDto` class represents a data transfer object (DTO) holding the content of a specific folder.
+ * Instances of FolderContentDto are used to retrieve a list of files from the FileRepository in a specific folder.
+ * It is annotated with Getter and Setter so that attributes of its instances can be set and retrieved.
+ */
 @Getter
 @Setter
 public class FolderContentDto {

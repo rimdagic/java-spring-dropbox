@@ -38,7 +38,7 @@ public class AccountService {
             var result = accountRepository.save(new Account(createAccountDto));
             return result;
         } catch (Exception e) {
-            throw new RegistrationFailedException("Was not able to register new account with username " +createAccountDto.getUsername());
+            throw new RegistrationFailedException("Was not able to register new account with username " +createAccountDto.getUsername() + " message: " + e.getMessage());
         }
     }
 
