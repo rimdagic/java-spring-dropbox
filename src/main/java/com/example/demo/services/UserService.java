@@ -50,7 +50,6 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-
     public static String getUsernameFromToken(String jwtToken) {
         try {
             DecodedJWT decodedJWT = JWT.decode(jwtToken);

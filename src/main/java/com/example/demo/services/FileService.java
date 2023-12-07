@@ -9,7 +9,6 @@ import com.example.demo.models.Folder;
 import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.FileRepository;
 import com.example.demo.repositories.FolderRepository;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -114,15 +113,14 @@ public class FileService {
             fileRepository.delete(chosenFile);
             return chosenFile;
         }
-        else throw new FileNotFoundException("User does not have file with corresponding filename in folder");
+        else throw new MissingFileException("User does not have file with corresponding filename in folder");
     } else throw new MissingFolderException("User does not have that folder");
 
     }
 
     public boolean sizeTooLarge(MultipartFile file){
         var fileSizeInBytes = file.getSize();
-        var maxFileSize = 1024 * 1024 * 5;
+        var maxFileSize = 1024 * 1024 * 2;
         return fileSizeInBytes > maxFileSize;
     }
 }
-

@@ -26,11 +26,11 @@ import java.util.List;
  * about the applications user accounts with appropriate responses.
  * It provides methods to register a new account, list all accounts, log in to account and delete an account.
  * <p>
- *     Endpoints:
- *     -POST /account/register: Register a new account.
- *     -GET /account/all: List all accounts.
- *     -POST /account/login: Log in to an account.
- *     -DELETE /account/{username}
+ * Endpoints:
+ * -POST /account/register: Register a new account.
+ * -GET /account/all: List all accounts.
+ * -POST /account/login: Log in to an account.
+ * -DELETE /account/{username}
  */
 @RequestMapping("/account")
 @RestController
