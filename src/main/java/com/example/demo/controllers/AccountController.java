@@ -7,6 +7,8 @@ import com.example.demo.exceptions.MissingAccountException;
 import com.example.demo.exceptions.RegistrationFailedException;
 import com.example.demo.models.Account;
 import com.example.demo.services.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +16,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -102,7 +102,6 @@ public class AccountController {
             if (result.isAuthenticated()) {
                 var token = accountService.login(username);
                 logger.info(username + " logged in at " + new Date());
-
                 return ResponseEntity.ok(token);
             }
 
