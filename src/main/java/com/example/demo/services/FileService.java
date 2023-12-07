@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateFileDto;
+import com.example.demo.exceptions.FileSizeTooLargeException;
 import com.example.demo.exceptions.MissingFileException;
 import com.example.demo.exceptions.MissingFolderException;
 import com.example.demo.models.File;
@@ -8,6 +9,7 @@ import com.example.demo.models.Folder;
 import com.example.demo.repositories.AccountRepository;
 import com.example.demo.repositories.FileRepository;
 import com.example.demo.repositories.FolderRepository;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,17 +41,23 @@ public class FileService {
 
     public File saveFile(MultipartFile multipartFile, String folderName, String username) throws IOException {
 
-        if(folderService.userHasFolder(username, folderName)){
-            Optional<Folder> folder = folderRepository.findByName(folderName);
-            UUID folderId = folder.get().getId();
-            String filename = multipartFile.getOriginalFilename();
-            Optional<File> fileInFolder = folderContainsFileCheck(folderId, filename);
+        if(!sizeTooLarge(multipartFile)) {
 
-            if(fileInFolder.isEmpty()) {
-                CreateFileDto createFileDto = new CreateFileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes(), folderId);
-                return fileRepository.save(new File(createFileDto));
-            } else throw new FileAlreadyExistsException("User " + username + " already has the file " + filename + " in folder " + folderName);
-        } else throw new MissingFolderException("Signed in user " + username + " does not have the folder " + folderName);
+            if (folderService.userHasFolder(username, folderName)) {
+                Optional<Folder> folder = folderRepository.findByName(folderName);
+                UUID folderId = folder.get().getId();
+                String filename = multipartFile.getOriginalFilename();
+                Optional<File> fileInFolder = folderContainsFileCheck(folderId, filename);
+
+                if (fileInFolder.isEmpty()) {
+                    CreateFileDto createFileDto = new CreateFileDto(multipartFile.getOriginalFilename(), multipartFile.getBytes(), folderId);
+                    return fileRepository.save(new File(createFileDto));
+                } else
+                    throw new FileAlreadyExistsException("User " + username + " already has the file " + filename + " in folder " + folderName);
+            } else
+                throw new MissingFolderException("Signed in user " + username + " does not have the folder " + folderName);
+        } else
+            throw new FileSizeTooLargeException("File size is too large");
     }
 
 
@@ -109,6 +117,12 @@ public class FileService {
         else throw new FileNotFoundException("User does not have file with corresponding filename in folder");
     } else throw new MissingFolderException("User does not have that folder");
 
+    }
+
+    public boolean sizeTooLarge(MultipartFile file){
+        var fileSizeInBytes = file.getSize();
+        var maxFileSize = 1024 * 1024 * 5;
+        return fileSizeInBytes > maxFileSize;
     }
 }
 

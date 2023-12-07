@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import com.example.demo.dto.CreateFileDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,11 @@ public class File {
     private String name;
 
     @Lob
-    @Column(name = "data", nullable = false, columnDefinition = "BLOB")
+    @Column(name = "data", nullable = false, columnDefinition = "LONGBLOB")
+    @JsonIgnore
+    @Basic(fetch = FetchType.LAZY)
     private byte[] data;
+
     private Date created = new Date();
 
     @Column(name = "folder_id")

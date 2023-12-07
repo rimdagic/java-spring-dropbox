@@ -28,6 +28,7 @@ public class FileController {
         this.userService = userService;
     }
 
+
     @GetMapping("/{folderName}/{filename}")
     public ResponseEntity<Object> getFile(
             @PathVariable("folderName") String folderName,
@@ -57,6 +58,19 @@ public class FileController {
         }
     }
 
+    /**
+     * Saves a file to a specified folder for the authenticated user.
+     *
+     * This endpoint handles an HTTP POST request to save a file to the user's folder.
+     *
+     * @param multipartFile       The file to be saved, sent as a part of the request.
+     * @param folderName          The name of the folder where the file should be saved.
+     * @param authorizationHeader The authorization header containing the user's JWT-string.
+     * @return A ResponseEntity with information about the saved file if successful, with an HTTP status of 200 (OK).
+     *         If an error occurs, it returns a ResponseEntity with a 500 (INTERNAL SERVER ERROR)
+     *         status and an error message in the response body.
+     * @throws IOException If an I/O error occurs while file is being saved to the database.
+     */
     @PostMapping("/{folderName}")
     public ResponseEntity<Object> saveFile(
             @RequestParam("file") MultipartFile multipartFile,
@@ -69,11 +83,25 @@ public class FileController {
             var result = fileService.saveFile(multipartFile, folderName, username);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.ok(
                     new ResponseMessageDto(e.getMessage(), LocalDateTime.now()));
         }
     }
 
+    /**
+     * Deletes a file from the specified folder for the authenticated user.
+     *
+     * This endpoint handles the HTTP DELETE request to delete a file from the user's folder.
+     *
+     * @param folderName The name of the folder from which the file should be deleted.
+     * @param filename   The name of the file to be deleted.
+     * @param authorizationHeader The authorization header containing the user's JWT-string.
+     * @return A ResponseEntity with the deleted file information if successful, with an HTTP status of 200 (OK).
+     *         If the file is not found, it returns a ResponseEntity with a 404 (NOT FOUND) status
+     *         and an error message in the response body.
+     * @throws IOException If an I/O error occurs during the file deletion process.
+     */
     @DeleteMapping({"/{folderName}/{filename}"})
     public ResponseEntity<Object> deleteFile(
             @PathVariable String folderName,
