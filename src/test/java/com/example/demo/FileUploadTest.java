@@ -20,10 +20,10 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+
 import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
@@ -86,7 +86,6 @@ public class FileUploadTest {
         //Then
         assertEquals(testFile.getOriginalFilename(), file.getName());
         assertEquals(testFile.getBytes(), file.getData());
-
     }
 
     @AfterEach

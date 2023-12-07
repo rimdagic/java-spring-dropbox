@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false) //stäng av säkerheten
+@AutoConfigureMockMvc(addFilters = false)
 @TestPropertySource("classpath:application-test.properties")
 public class AccountDeleteTest {
 
@@ -56,13 +56,8 @@ public class AccountDeleteTest {
 
         //Then
         Optional<Account> deletedAccountOptional = accountRepository.findByUsername(username);
-        Account deletedAccount = null;
+        assertFalse(deletedAccountOptional.isPresent());
 
-        if(deletedAccountOptional.isPresent()){
-            deletedAccount = deletedAccountOptional.get();
-        }
-
-        assertNull(deletedAccount);
     }
 
     @AfterEach

@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.dto.CreateAccountDto;
-import com.example.demo.models.Account;
 import com.example.demo.repositories.AccountRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -29,7 +28,6 @@ public class AccountRegisterTest {
     private AccountRepository accountRepository;
 
     private final String username = "keyboardcat?)HAEWSF9AHÅPFV(Ahefvuad__USERNAME";
-    private Account newAccount = null;
 
     @Test
     void testRegisterAccount() throws Exception{
@@ -43,16 +41,11 @@ public class AccountRegisterTest {
         mockMvc.perform(post("/account/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(createAccountDto)))
-
-        //Then
                 .andExpect(status().isOk());
 
+        //Then
         var newAccountOptional = accountRepository.findByUsername(username);
-        if(newAccountOptional.isPresent()){
-            newAccount = newAccountOptional.get();
-        }
-
-        assertEquals(username, newAccount.getUsername());
+        assertTrue(newAccountOptional.isPresent());
     }
 
     @AfterEach

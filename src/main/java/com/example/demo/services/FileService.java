@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.dto.CreateFileDto;
+import com.example.demo.exceptions.MissingFileException;
 import com.example.demo.exceptions.MissingFolderException;
 import com.example.demo.models.File;
 import com.example.demo.models.Folder;
@@ -61,10 +62,14 @@ public class FileService {
         return fileRepository.findFilesByFolderId(folderId);
     }
 
-    public Optional<File> downloadFile(String username, String folderName, String filename){
+    public File downloadFile(String username, String folderName, String filename){
         Optional<Folder> folder = folderService.getUsersFolder(username, folderName);
         if (folder.isPresent()) {
-            return getFileFromFolder(filename, folder.get().getId());
+            var fileOptional = getFileFromFolder(filename, folder.get().getId());
+            if(fileOptional.isPresent()){
+                return fileOptional.get();
+            } else throw new MissingFileException("File does not exist");
+
         } else throw new MissingFolderException("Folder does not exist");
     }
 

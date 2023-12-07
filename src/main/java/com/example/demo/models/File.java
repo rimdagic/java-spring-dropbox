@@ -20,6 +20,9 @@ public class File {
     private UUID id;
 
     private String name;
+
+    @Lob
+    @Column(name = "data", nullable = false, columnDefinition = "BLOB")
     private byte[] data;
     private Date created = new Date();
 

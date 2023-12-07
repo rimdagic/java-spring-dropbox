@@ -1,5 +1,7 @@
 package com.example.demo.services;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.example.demo.dto.CreateAccountDto;
 import com.example.demo.exceptions.MissingAccountException;
 import com.example.demo.exceptions.RegistrationFailedException;
@@ -40,6 +42,15 @@ public class AccountService {
         }
     }
 
+    public String login(String username){
+        var algorithm = Algorithm.HMAC256("keyboardcat");
+        var token = JWT.create()
+                .withSubject(username)
+                .withIssuer("auth0")
+                .sign(algorithm);
+        return token;
+    }
+
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
     }
@@ -51,7 +62,6 @@ public class AccountService {
             Account account = accountOptional.get();
             accountRepository.delete(account);
 
-            System.out.println("YES");
             return account;
         }
         throw new MissingAccountException("The account that you are trying to delete does not exist");
