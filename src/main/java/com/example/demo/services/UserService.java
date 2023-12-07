@@ -24,20 +24,6 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Account createAccount(CreateAccountDto createAccountDto) {
-
-        String password = createAccountDto.getPassword();
-        String encryptedPassword = passwordEncoder.encode(password);
-        createAccountDto.setPassword(encryptedPassword);
-
-        var result = accountRepository.save(new Account(createAccountDto));
-        return result;
-    }
-
-    public List<Account> getAllAccounts(){
-        return accountRepository.findAll();
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByUsername(username)

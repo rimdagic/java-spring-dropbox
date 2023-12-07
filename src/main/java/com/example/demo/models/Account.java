@@ -25,7 +25,7 @@ import java.util.UUID;
  *      ManyToOne annotation
  * <p>
  * The class is annotated with Entity to ensure it can represent a repository and database entity. All attributes have
- * getters and setters and a constructor without arguments. There is also a constructur that initializes an instance of
+ * getters and setters and a constructor without arguments. There is also a constructor that initializes an instance of
  * the class by taking an instance of an CreateAccountDto to save  to the database.
  */
 @Entity
@@ -53,6 +53,12 @@ public class Account {
     )
     private Collection<Authorities> authorities;
 
+    /**
+     * Constructs a new `Account` from the provided `CreateAccountDto`.
+     * Copies the username and password from the DTO to initialize the account.
+     *
+     * @param createAccountDto
+     */
     public Account(CreateAccountDto createAccountDto) {
         this.username = createAccountDto.getUsername();
         this.password = createAccountDto.getPassword();

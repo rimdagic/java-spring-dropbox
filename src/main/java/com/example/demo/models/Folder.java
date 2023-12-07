@@ -32,6 +32,12 @@ public class Folder {
     private UUID ownerId;
     private Date created = new Date();
 
+    /**
+     * Constructs a new `Folder` with the specified name and owner ID.
+     *
+     * @param name      The name of the folder
+     * @param ownerId   The UUID of the account that created and had access to the folder
+     */
     public Folder(String name, UUID ownerId) {
         this.name = name;
         this.ownerId = ownerId;

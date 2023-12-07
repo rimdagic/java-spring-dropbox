@@ -44,7 +44,12 @@ public class File {
     @Column(name = "folder_id")
     private UUID folderId;
 
-
+    /**
+     * Constructs a new `File` using information from the provided `CreateFileDto`.
+     * Copies the name, data, and folderId from the DTO to initialize the file.
+     *
+     * @param createFileDto The data transfer object containing file information.
+     */
     public File(CreateFileDto createFileDto){
         this.name = createFileDto.getName();
         this.data = createFileDto.getData();

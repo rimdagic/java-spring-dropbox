@@ -15,7 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+/**
+ * The `AccountService` class handles the logic concerning the user Accounts. It is annotated as a Service and does also
+ * have a constructor that takes all arguments.
+ */
+//@AllArgsConstructor
 @Service
 public class AccountService {
 

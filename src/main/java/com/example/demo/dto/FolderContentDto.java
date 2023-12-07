@@ -2,7 +2,6 @@ package com.example.demo.dto;
 
 import com.example.demo.models.File;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Collection;
@@ -19,6 +18,11 @@ public class FolderContentDto {
     private String folderName;
     private Collection<File> files;
 
+    /**
+     * A constructor that initializes instances of the FolderContentDto class
+     * @param folderName A folder name
+     * @param files A collection of the files that the folder contains
+     */
     public FolderContentDto(String folderName, List<File> files) {
         this.folderName = folderName;
         this.files = files;

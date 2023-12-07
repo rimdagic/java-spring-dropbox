@@ -23,6 +23,13 @@ public class Authorities implements GrantedAuthority {
     private Long id;
     private String authorityName;
 
+    /**
+     * Returns the authority name of the Authority instance object.
+     * This method is overridden since it is part of the `GrantedAuthority` interface.
+     * It is used to provide the authority for use in authentication and authorization.
+     *
+     * @return The name of the authority.
+     */
     @Override
     public String getAuthority() {
         return authorityName;

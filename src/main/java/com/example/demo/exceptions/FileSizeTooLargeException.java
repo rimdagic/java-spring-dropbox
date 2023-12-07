@@ -11,8 +11,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * it will result in an HTTP 413 Payload too large response.
  */
 @ResponseStatus(value = HttpStatus.PAYLOAD_TOO_LARGE)
-public class FileSizeTooLargeException extends RuntimeException{
-        public FileSizeTooLargeException(String message) {
-            super(message);
-        }
+public class FileSizeTooLargeException extends RuntimeException {
+
+    /**
+     * Constructs a new `FileSizeTooLargeException` with the specified detail message.
+     *
+     * @param message A message providing more details about the exception, passing it to the super class
+     *                `RuntimeException`.
+     */
+    public FileSizeTooLargeException(String message) {
+        super(message);
     }
+}

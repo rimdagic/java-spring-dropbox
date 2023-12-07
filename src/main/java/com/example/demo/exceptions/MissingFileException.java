@@ -12,8 +12,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * it will result in an HTTP 404 Not found response.
  */
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class MissingFileException extends RuntimeException{
-        public MissingFileException(String message) {
-            super(message);
-        }
+public class MissingFileException extends RuntimeException {
+
+    /**
+     * Constructs a new `MissingFileException` with a specified detail message.
+     *
+     * @param message A message providing more details about the exception, passing it to the super class
+     *                `RuntimeException`.
+     */
+    public MissingFileException(String message) {
+        super(message);
     }
+}

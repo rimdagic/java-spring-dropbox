@@ -12,8 +12,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * it will result in an HTTP 409 Conflict response.
  */
 @ResponseStatus(value = HttpStatus.CONFLICT)
-public class RegistrationFailedException extends RuntimeException{
-        public RegistrationFailedException(String message) {
-            super(message);
-        }
+public class RegistrationFailedException extends RuntimeException {
+
+    /**
+     * Constructs a new `RegistrationFailedException` with a specified detail message.
+     *
+     * @param message A message providing more details about the exception, passing it to the super class
+     *                `RuntimeException`.
+     */
+    public RegistrationFailedException(String message) {
+        super(message);
     }
+}

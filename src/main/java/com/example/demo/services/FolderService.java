@@ -33,7 +33,6 @@ public class FolderService {
 
     public Folder createFolder(CreateFolderDto createFolderDto, String username){
         var account = accountRepository.findByUsername(username).get();
-        var folderOptional = folderRepository.findByName(createFolderDto.getName());
         boolean isTaken = folderNameTaken(createFolderDto.getName(), username);
 
         if(!isTaken) {
