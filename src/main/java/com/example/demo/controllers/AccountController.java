@@ -61,7 +61,7 @@ public class AccountController {
             var result = accountService.createAccount(createAccountDto);
             logger.info("A new account with username " + createAccountDto.getUsername() + " was created at " + new Date());
             return ResponseEntity.ok(result);
-        } catch (RegistrationFailedException e) {
+        } catch (Exception e) {
             return ResponseEntity.status(409).body(
                     new ResponseMessageDto(
                             e.getMessage(),

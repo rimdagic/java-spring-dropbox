@@ -3,6 +3,7 @@ package com.example.demo.services;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.demo.dto.CreateAccountDto;
+import com.example.demo.exceptions.AccountAlreadyExistsException;
 import com.example.demo.exceptions.MissingAccountException;
 import com.example.demo.exceptions.RegistrationFailedException;
 import com.example.demo.models.Account;
@@ -40,10 +41,11 @@ public class AccountService {
      *
      * @param createAccountDto contains a username and password, and the method tries to create a new account with those
      *                         submitted credentials.
-     * @return The result is returned is the newly created account object if successful. Otherwise, an exception will be
-     * thrown.
-     * @thrown If the account creation process fails, typically due to issues with data integrity
+     * @return The result returned is the newly created account object if successful.
+     * @throws RegistrationFailedException If the account creation process fails, typically due to issues with data integrity
      * or database operations.
+     * @throws AccountAlreadyExistsException if the account to be created has a conflicting username with an account
+     * that already exists in the `AccountRepository`.
      */
     public Account createAccount(CreateAccountDto createAccountDto) {
 
@@ -51,12 +53,15 @@ public class AccountService {
         String encryptedPassword = passwordEncoder.encode(password);
         createAccountDto.setPassword(encryptedPassword);
 
-        try {
-            var result = accountRepository.save(new Account(createAccountDto));
-            return result;
-        } catch (Exception e) {
-            throw new RegistrationFailedException("Was not able to register new account with username " + createAccountDto.getUsername() + " message: " + e.getMessage());
-        }
+        Optional<Account> accountOptional = accountRepository.findByUsername(createAccountDto.getUsername());
+        if(accountOptional.isEmpty()){
+            try {
+                var result = accountRepository.save(new Account(createAccountDto));
+                return result;
+            } catch (Exception e) {
+                throw new RegistrationFailedException(e.getMessage());
+            }
+        } else throw new AccountAlreadyExistsException("There is already an account with that username");
     }
 
     /**
@@ -88,7 +93,7 @@ public class AccountService {
      * The `deleteAccount` method deletes an account based on the provided username.
      *
      * @param username The `username` of the account that is to be deleted.
-     * @return The account that has been deleted represented as a JSON object if successful. Otherwise an exception is
+     * @return The account that has been deleted represented as a JSON object if successful. Otherwise, an exception is
      * thrown that no account with the specified username was found.
      */
     public Account deleteAccount(String username) {
